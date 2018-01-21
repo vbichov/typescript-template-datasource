@@ -3,7 +3,9 @@ import { QueryCtrl } from 'app/plugins/sdk';
 export declare class ChangeMyNameQueryCtrl extends QueryCtrl {
     private templateSrv;
     static templateUrl: string;
-    defaults: {};
+    defaults: {
+        type: string;
+    };
     /** @ngInject **/
     constructor($scope: any, $injector: any, templateSrv: any);
     getOptions(query: any): any;

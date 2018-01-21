@@ -15,7 +15,7 @@ describe('ChangeMyNameQueryCtrl', function() {
   describe('init query_ctrl variables', function() {
     it('defaults should be initialized', function() {
       // Replace with test for defaults that should be set in the query ctrl.
-      expect(queryCtrl.target.target).to.be('');
+      expect(queryCtrl.target.target).to.be('select metric');
     });
   });
 });

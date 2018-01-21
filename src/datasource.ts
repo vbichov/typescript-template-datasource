@@ -2,18 +2,24 @@
 
 import _ from 'lodash';
 
-export default class ChangeMyNameDatasource {
+export default class MySimpleJsonDatasource {
   id: number;
   name: string;
+  url: string;
 
   /** @ngInject */
   constructor(instanceSettings, private backendSrv, private templateSrv, private $q) {
     this.name = instanceSettings.name;
     this.id = instanceSettings.id;
+    this.url = instanceSettings.url;
   }
 
   query(options) {
-    throw new Error("Query Support not implemented yet.");
+    return this.backendSrv.datasourceRequest({
+      url: this.url + '/query',
+      data: options,
+      method: 'POST'
+    });
   }
 
   annotationQuery(options) {
@@ -21,14 +27,27 @@ export default class ChangeMyNameDatasource {
   }
 
   metricFindQuery(query: string) {
-    throw new Error("Template Variable Support not implemented yet.");
+    return this.backendSrv.datasourceRequest({
+      url: this.url + '/search',
+      data: query,
+      method: 'POST',
+    }).then(this.mapToTextValue);
   }
 
   testDatasource() {
-    return this.$q.when({
-      status: 'error',
-      message: 'Data Source is just a template and has not been implemented yet.',
-      title: 'Error'
+    return this.backendSrv.datasourceRequest({
+      url: this.url,
+      method: 'GET'
+    }).then(response => {
+      if (response.status === 200) {
+        return { status: "success", message: "Data source is working", title: "Success" };
+      }
+    });
+  }
+
+  mapToTextValue(result) {
+    return _.map(result.data, (d) => {
+      return { text: d, value: d };
     });
   }
 }

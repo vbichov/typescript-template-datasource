@@ -23,10 +23,11 @@ System.register(['lodash', 'app/plugins/sdk', './css/query_editor.css!'], functi
                 function ChangeMyNameQueryCtrl($scope, $injector, templateSrv) {
                     _super.call(this, $scope, $injector);
                     this.templateSrv = templateSrv;
-                    this.defaults = {};
+                    this.defaults = {
+                        type: 'timeserie'
+                    };
                     lodash_1.default.defaultsDeep(this.target, this.defaults);
                     this.target.target = this.target.target || 'select metric';
-                    this.target.type = this.target.type || 'timeserie';
                 }
                 ChangeMyNameQueryCtrl.prototype.getOptions = function (query) {
                     return this.datasource.metricFindQuery(query || '');

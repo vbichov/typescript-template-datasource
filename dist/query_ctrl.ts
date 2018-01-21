@@ -8,6 +8,7 @@ export class ChangeMyNameQueryCtrl extends QueryCtrl {
   static templateUrl = 'partials/query.editor.html';
 
   defaults = {
+    type: 'timeserie'
   };
 
   /** @ngInject **/
@@ -17,7 +18,6 @@ export class ChangeMyNameQueryCtrl extends QueryCtrl {
     _.defaultsDeep(this.target, this.defaults);
 
     this.target.target = this.target.target || 'select metric';
-    this.target.type = this.target.type || 'timeserie';
   }
 
   getOptions(query) {

@@ -1,4 +1,4 @@
-import ChangeMyNameDatasource from './datasource';
+import MySimpleJsonDatasource from './datasource';
 import {ChangeMyNameQueryCtrl} from './query_ctrl';
 import {ChangeMyNameConfigCtrl} from './config_ctrl';
 
@@ -7,7 +7,7 @@ class ChangeMyNameAnnotationsQueryCtrl {
 }
 
 export {
-  ChangeMyNameDatasource as Datasource,
+  MySimpleJsonDatasource as Datasource,
   ChangeMyNameQueryCtrl as QueryCtrl,
   ChangeMyNameConfigCtrl as ConfigCtrl,
   ChangeMyNameAnnotationsQueryCtrl as AnnotationsQueryCtrl,

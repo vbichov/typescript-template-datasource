@@ -1,37 +1,61 @@
 ///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
-System.register([], function(exports_1) {
-    var ChangeMyNameDatasource;
+System.register(['lodash'], function(exports_1) {
+    var lodash_1;
+    var MySimpleJsonDatasource;
     return {
-        setters:[],
+        setters:[
+            function (lodash_1_1) {
+                lodash_1 = lodash_1_1;
+            }],
         execute: function() {
-            ChangeMyNameDatasource = (function () {
+            MySimpleJsonDatasource = (function () {
                 /** @ngInject */
-                function ChangeMyNameDatasource(instanceSettings, backendSrv, templateSrv, $q) {
+                function MySimpleJsonDatasource(instanceSettings, backendSrv, templateSrv, $q) {
                     this.backendSrv = backendSrv;
                     this.templateSrv = templateSrv;
                     this.$q = $q;
                     this.name = instanceSettings.name;
                     this.id = instanceSettings.id;
+                    this.url = instanceSettings.url;
                 }
-                ChangeMyNameDatasource.prototype.query = function (options) {
-                    throw new Error("Query Support not implemented yet.");
-                };
-                ChangeMyNameDatasource.prototype.annotationQuery = function (options) {
-                    throw new Error("Annotation Support not implemented yet.");
-                };
-                ChangeMyNameDatasource.prototype.metricFindQuery = function (query) {
-                    throw new Error("Template Variable Support not implemented yet.");
-                };
-                ChangeMyNameDatasource.prototype.testDatasource = function () {
-                    return this.$q.when({
-                        status: 'error',
-                        message: 'Data Source is just a template and has not been implemented yet.',
-                        title: 'Error'
+                MySimpleJsonDatasource.prototype.query = function (options) {
+                    return this.backendSrv.datasourceRequest({
+                        url: this.url + '/query',
+                        data: options,
+                        method: 'POST'
+                    }).then(function (result) {
+                        console.log(result);
+                        return result;
                     });
                 };
-                return ChangeMyNameDatasource;
+                MySimpleJsonDatasource.prototype.annotationQuery = function (options) {
+                    throw new Error("Annotation Support not implemented yet.");
+                };
+                MySimpleJsonDatasource.prototype.metricFindQuery = function (query) {
+                    return this.backendSrv.datasourceRequest({
+                        url: this.url + '/search',
+                        data: query,
+                        method: 'POST',
+                    }).then(this.mapToTextValue);
+                };
+                MySimpleJsonDatasource.prototype.testDatasource = function () {
+                    return this.backendSrv.datasourceRequest({
+                        url: this.url,
+                        method: 'GET'
+                    }).then(function (response) {
+                        if (response.status === 200) {
+                            return { status: "success", message: "Data source is working", title: "Success" };
+                        }
+                    });
+                };
+                MySimpleJsonDatasource.prototype.mapToTextValue = function (result) {
+                    return lodash_1.default.map(result.data, function (d) {
+                        return { text: d, value: d };
+                    });
+                };
+                return MySimpleJsonDatasource;
             })();
-            exports_1("default", ChangeMyNameDatasource);
+            exports_1("default", MySimpleJsonDatasource);
         }
     }
 });
