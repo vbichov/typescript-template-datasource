@@ -1,7 +1,7 @@
 {
-  "type": "datasource",
-  "name": "MySimpleJson",
-  "id": "grafana-mysimplejson-datasource",
+  "type": "app",
+  "name": "MySimpleApp",
+  "id": "grafana-mysimple-app",
 
   "info": {
     "description": "Description of plugin",
@@ -22,11 +22,13 @@
     "updated": "2018-01-19"
   },
 
+  "includes": [
+    {"type": "datasource", "name": "My Simple Datasource"}
+  ],
+
+
   "dependencies": {
     "grafanaVersion": "4.5.x",
     "plugins": [ ]
-  },
-
-  "metrics": true,
-  "annotations": false
+  }
 }

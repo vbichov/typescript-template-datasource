@@ -19,9 +19,6 @@ export default class MySimpleJsonDatasource {
       url: this.url + '/query',
       data: options,
       method: 'POST'
-    }).then(result => {
-      console.log(result);
-      return result;
     });
   }
 
@@ -49,8 +46,14 @@ export default class MySimpleJsonDatasource {
   }
 
   mapToTextValue(result) {
-    return _.map(result.data, (d) => {
-      return { text: d, value: d };
-    });
+    const options = [];
+    for (let i = 0; i < result.data.length; i++) {
+      options.push({ text: result.data[i], value: result.data[i]});
+    }
+
+    return options;
+    // return _.map(result.data, (d) => {
+    //   return { text: d, value: d };
+    // });
   }
 }

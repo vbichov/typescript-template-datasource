@@ -1,7 +1,7 @@
 {
   "type": "datasource",
   "name": "MySimpleJson",
-  "id": "grafana-mysimplejson-datasource",
+  "id": "grafana-mysimplebundled-datasource",
 
   "info": {
     "description": "Description of plugin",
