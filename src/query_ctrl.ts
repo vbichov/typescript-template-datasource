@@ -13,14 +13,17 @@ export class ChangeMyNameQueryCtrl extends QueryCtrl {
   /** @ngInject **/
   constructor($scope, $injector, private templateSrv) {
     super($scope, $injector);
-
-    _.defaultsDeep(this.target, this.defaults);
+    console.log(this.target)
+    console.log(this.defaults)
+    // _.defaultsDeep(this.target, this.defaults);
 
     this.target.target = this.target.target || 'select metric';
     this.target.type = this.target.type || 'timeserie';
   }
 
   getOptions(query) {
+    console.log("getOptions on quety_ctrl")
+    console.log(query)
     return this.datasource.metricFindQuery(query || '');
   }
 
