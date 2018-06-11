@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ChangeMyNameConfigCtrl = (function () {
-    function ChangeMyNameConfigCtrl($scope) {
+var WixPrestoConfigCtrl = (function () {
+    function WixPrestoConfigCtrl($scope) {
     }
-    ChangeMyNameConfigCtrl.templateUrl = 'partials/config.html';
-    return ChangeMyNameConfigCtrl;
+    WixPrestoConfigCtrl.templateUrl = 'partials/config.html';
+    return WixPrestoConfigCtrl;
 }());
-exports.ChangeMyNameConfigCtrl = ChangeMyNameConfigCtrl;
+exports.WixPrestoConfigCtrl = WixPrestoConfigCtrl;
 //# sourceMappingURL=config_ctrl.js.map

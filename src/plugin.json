@@ -1,6 +1,6 @@
 {
     "type": "datasource",
-    "name": "Change My Name",
+    "name": "Presto",
     "id": "wix-presto-datasource",
 
     "info": {
@@ -25,6 +25,6 @@
         "plugins": []
     },
 
-    "metrics": false,
+    "metrics": true,
     "annotations": false
 }

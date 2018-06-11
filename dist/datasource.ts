@@ -5,7 +5,7 @@ import * as $ from 'jquery';
 import { QueryCtrl } from '../dist/module';
 // /Users/vitalyb/devel/typescript-template-datasource/node_modules/presto-client
 
-export default class ChangeMyNameDatasource {
+export default class WixPrestoDatasource {
   id: number;
   name: string;
   foo: object;

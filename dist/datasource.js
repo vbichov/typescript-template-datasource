@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
-var ChangeMyNameDatasource = (function () {
-    function ChangeMyNameDatasource(instanceSettings, backendSrv, templateSrv, $q) {
+var WixPrestoDatasource = (function () {
+    function WixPrestoDatasource(instanceSettings, backendSrv, templateSrv, $q) {
         this.backendSrv = backendSrv;
         this.templateSrv = templateSrv;
         this.$q = $q;
@@ -23,7 +23,7 @@ var ChangeMyNameDatasource = (function () {
         };
         console.log(instanceSettings);
     }
-    ChangeMyNameDatasource.prototype.buildQueryParameters = function (options) {
+    WixPrestoDatasource.prototype.buildQueryParameters = function (options) {
         var _this = this;
         console.log("buildQueryParameters");
         console.log(options);
@@ -41,7 +41,7 @@ var ChangeMyNameDatasource = (function () {
         options.targets = targets;
         return options;
     };
-    ChangeMyNameDatasource.prototype.getResult = function (res, toralRes) {
+    WixPrestoDatasource.prototype.getResult = function (res, toralRes) {
         var _this = this;
         console.log("starting getResult");
         console.log(res);
@@ -70,7 +70,7 @@ var ChangeMyNameDatasource = (function () {
             var _a;
         });
     };
-    ChangeMyNameDatasource.prototype.query = function (options) {
+    WixPrestoDatasource.prototype.query = function (options) {
         var _this = this;
         console.log("running query func:");
         console.log(options);
@@ -85,7 +85,7 @@ var ChangeMyNameDatasource = (function () {
             return _this.getResult(resp, { data: { columns: [], data: [] } });
         });
     };
-    ChangeMyNameDatasource.prototype.processQueryResult = function (res) {
+    WixPrestoDatasource.prototype.processQueryResult = function (res) {
         function prestoToGrafanaType(grafanaType) {
             switch (grafanaType) {
                 case 'bigint':
@@ -116,30 +116,30 @@ var ChangeMyNameDatasource = (function () {
         };
         return { data: [data] };
     };
-    ChangeMyNameDatasource.prototype.annotationQuery = function (options) {
+    WixPrestoDatasource.prototype.annotationQuery = function (options) {
         console.log("anotation query");
         console.log(options);
         throw new Error("Annotation Support not implemented yet.");
     };
-    ChangeMyNameDatasource.prototype.metricFindQuery = function (query) {
+    WixPrestoDatasource.prototype.metricFindQuery = function (query) {
         var _this = this;
         console.log("metric find query");
         console.log(query);
         return this.doPrestoRequest(query).then(function (resp) { return _this.getResult(resp, { data: { columns: [], data: [] } }); });
     };
-    ChangeMyNameDatasource.prototype.doRequest = function (options) {
+    WixPrestoDatasource.prototype.doRequest = function (options) {
         options.headers = this.headers;
         console.log(options);
         return this.backendSrv.datasourceRequest(options);
     };
-    ChangeMyNameDatasource.prototype.doPrestoRequest = function (query) {
+    WixPrestoDatasource.prototype.doPrestoRequest = function (query) {
         return this.doRequest({
             url: this.url + "/v1/statement",
             method: 'POST',
             data: query
         });
     };
-    ChangeMyNameDatasource.prototype.testDatasource = function () {
+    WixPrestoDatasource.prototype.testDatasource = function () {
         return this.doRequest({
             url: this.url + "/v1/statement",
             method: 'POST',
@@ -154,7 +154,7 @@ var ChangeMyNameDatasource = (function () {
             }
         });
     };
-    return ChangeMyNameDatasource;
+    return WixPrestoDatasource;
 }());
-exports.default = ChangeMyNameDatasource;
+exports.default = WixPrestoDatasource;
 //# sourceMappingURL=datasource.js.map

@@ -12,9 +12,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var sdk_1 = require("app/plugins/sdk");
 require("./css/query_editor.css!");
-var ChangeMyNameQueryCtrl = (function (_super) {
-    __extends(ChangeMyNameQueryCtrl, _super);
-    function ChangeMyNameQueryCtrl($scope, $injector, templateSrv) {
+var WixPrestoQueryCtrl = (function (_super) {
+    __extends(WixPrestoQueryCtrl, _super);
+    function WixPrestoQueryCtrl($scope, $injector, templateSrv) {
         var _this = _super.call(this, $scope, $injector) || this;
         _this.templateSrv = templateSrv;
         _this.defaults = {};
@@ -24,16 +24,16 @@ var ChangeMyNameQueryCtrl = (function (_super) {
         _this.target.type = _this.target.type || 'timeserie';
         return _this;
     }
-    ChangeMyNameQueryCtrl.prototype.getOptions = function (query) {
+    WixPrestoQueryCtrl.prototype.getOptions = function (query) {
         console.log("getOptions on quety_ctrl");
         console.log(query);
         return this.datasource.metricFindQuery(query || '');
     };
-    ChangeMyNameQueryCtrl.prototype.onChangeInternal = function () {
+    WixPrestoQueryCtrl.prototype.onChangeInternal = function () {
         this.panelCtrl.refresh();
     };
-    ChangeMyNameQueryCtrl.templateUrl = 'partials/query.editor.html';
-    return ChangeMyNameQueryCtrl;
+    WixPrestoQueryCtrl.templateUrl = 'partials/query.editor.html';
+    return WixPrestoQueryCtrl;
 }(sdk_1.QueryCtrl));
-exports.ChangeMyNameQueryCtrl = ChangeMyNameQueryCtrl;
+exports.WixPrestoQueryCtrl = WixPrestoQueryCtrl;
 //# sourceMappingURL=query_ctrl.js.map
