@@ -61,10 +61,16 @@ export default class ChangeMyNameDatasource {
   getResult(res,toralRes) {
     console.log("starting getResult")
     console.log(res)
-    if (res.status !== 200 || res.data.hasOwnProperty('error') === true) {
-      console.log(`status is ${res.status} and state is ${res.data.state}`)
-      throw new Error("something wrong with the ressponse");
+    // if (res.status !== 200 || res.data.hasOwnProperty('error') === true) {
+    //   console.log(`status is ${res.status} and state is ${res.data.state}`)
+    if (res.status !== 200) {
+      throw new Error(`got http error code ${res.status}`)
     }
+    if (res.data.hasOwnProperty('error') === true) {
+      throw new Error(res.data.error.message)
+    }
+      // throw new Error("something wrong with the ressponse");
+    // }
     const u = new URL(res.data.nextUri)
     return this.doRequest({
       url: `${this.url}${u.pathname}`,
@@ -90,10 +96,12 @@ export default class ChangeMyNameDatasource {
     console.log("running query func:")
     console.log(options)
     console.log(`the sql is ${options.targets[0].rawSql}`)
+    const sql = this.templateSrv.replace(options.targets[0].rawSql)
+    console.log(`actual sql ${sql}`)
     return this.doRequest({
       url: `${this.url}/v1/statement`,
       method: 'POST',
-      data: options.targets[0].rawSql
+      data: sql
       // data: 'select id, post_date, post_content from captain_log_posts order by post_date desc limit 3'
     }).then(resp => { return this.getResult(resp, {data: {columns: [], data: []}})
 
@@ -144,7 +152,6 @@ export default class ChangeMyNameDatasource {
     console.log(res.data.columns)
     let data = {
       columns: res.data.columns.map(function(e) {
-        console.log(e.type)
         return {text: e.name,title: e.name, type: prestoToGrafanaType(e.type)};
       }),
       rows: res.data.data,
@@ -187,7 +194,8 @@ export default class ChangeMyNameDatasource {
   metricFindQuery(query: string) {
     console.log("metric find query");
     console.log(query);
-    throw new Error("Template Variable Support not implemented yet.");
+    return this.doPrestoRequest(query).then(resp => { return this.getResult(resp, {data: {columns: [], data: []}})})
+    // throw new Error("Template Variable Support not implemented yet.");
   }
 
 
@@ -198,6 +206,14 @@ export default class ChangeMyNameDatasource {
     return this.backendSrv.datasourceRequest(options);
   }
   
+  doPrestoRequest(query: string) {
+    return this.doRequest({
+      url: `${this.url}/v1/statement`,
+      method: 'POST',
+      data: query
+    })
+  }
+
   testDatasource() {
 
     return this.doRequest({

@@ -1,10 +1,10 @@
 import {describe, beforeEach, it, sinon, expect, angularMocks} from './lib/common';
-import ChangeMyNameDatasource from '../src/datasource';
+import WixPrestoDatasource from '../src/datasource';
 import TemplateSrvStub from './lib/template_srv_stub';
 import Q from 'q';
 import moment from 'moment';
 
-describe('ChangeMyNameDatasource', function() {
+describe('WixPrestoDatasource', function() {
   let ctx: any = {
     backendSrv: {},
     templateSrv: new TemplateSrvStub()
@@ -14,7 +14,7 @@ describe('ChangeMyNameDatasource', function() {
     ctx.$q = Q;
     ctx.instanceSettings = {};
 
-    ctx.ds = new ChangeMyNameDatasource(ctx.instanceSettings, ctx.backendSrv, ctx.templateSrv, ctx.$q);
+    ctx.ds = new WixPrestoDatasource(ctx.instanceSettings, ctx.backendSrv, ctx.templateSrv, ctx.$q);
   });
 
   describe('When performing testDatasource', function() {

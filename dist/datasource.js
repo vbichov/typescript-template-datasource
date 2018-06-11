@@ -45,9 +45,11 @@ var ChangeMyNameDatasource = (function () {
         var _this = this;
         console.log("starting getResult");
         console.log(res);
-        if (res.status !== 200 || res.data.hasOwnProperty('error') === true) {
-            console.log("status is " + res.status + " and state is " + res.data.state);
-            throw new Error("something wrong with the ressponse");
+        if (res.status !== 200) {
+            throw new Error("got http error code " + res.status);
+        }
+        if (res.data.hasOwnProperty('error') === true) {
+            throw new Error(res.data.error.message);
         }
         var u = new URL(res.data.nextUri);
         return this.doRequest({
@@ -73,10 +75,12 @@ var ChangeMyNameDatasource = (function () {
         console.log("running query func:");
         console.log(options);
         console.log("the sql is " + options.targets[0].rawSql);
+        var sql = this.templateSrv.replace(options.targets[0].rawSql);
+        console.log("actual sql " + sql);
         return this.doRequest({
             url: this.url + "/v1/statement",
             method: 'POST',
-            data: options.targets[0].rawSql
+            data: sql
         }).then(function (resp) {
             return _this.getResult(resp, { data: { columns: [], data: [] } });
         });
@@ -105,7 +109,6 @@ var ChangeMyNameDatasource = (function () {
         console.log(res.data.columns);
         var data = {
             columns: res.data.columns.map(function (e) {
-                console.log(e.type);
                 return { text: e.name, title: e.name, type: prestoToGrafanaType(e.type) };
             }),
             rows: res.data.data,
@@ -119,14 +122,22 @@ var ChangeMyNameDatasource = (function () {
         throw new Error("Annotation Support not implemented yet.");
     };
     ChangeMyNameDatasource.prototype.metricFindQuery = function (query) {
+        var _this = this;
         console.log("metric find query");
         console.log(query);
-        throw new Error("Template Variable Support not implemented yet.");
+        return this.doPrestoRequest(query).then(function (resp) { return _this.getResult(resp, { data: { columns: [], data: [] } }); });
     };
     ChangeMyNameDatasource.prototype.doRequest = function (options) {
         options.headers = this.headers;
         console.log(options);
         return this.backendSrv.datasourceRequest(options);
+    };
+    ChangeMyNameDatasource.prototype.doPrestoRequest = function (query) {
+        return this.doRequest({
+            url: this.url + "/v1/statement",
+            method: 'POST',
+            data: query
+        });
     };
     ChangeMyNameDatasource.prototype.testDatasource = function () {
         return this.doRequest({

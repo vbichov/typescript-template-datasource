@@ -1,14 +1,14 @@
-import ChangeMyNameDatasource from './datasource';
-import {ChangeMyNameQueryCtrl} from './query_ctrl';
-import {ChangeMyNameConfigCtrl} from './config_ctrl';
+import WixPrestoDatasource from './datasource';
+import {WixPrestoQueryCtrl} from './query_ctrl';
+import {WixPrestoConfigCtrl} from './config_ctrl';
 
-class ChangeMyNameAnnotationsQueryCtrl {
+class WixPrestoAnnotationsQueryCtrl {
   static templateUrl = 'partials/annotations.editor.html';
 }
 
 export {
-  ChangeMyNameDatasource as Datasource,
-  ChangeMyNameQueryCtrl as QueryCtrl,
-  ChangeMyNameConfigCtrl as ConfigCtrl,
-  ChangeMyNameAnnotationsQueryCtrl as AnnotationsQueryCtrl,
+  WixPrestoDatasource as Datasource,
+  WixPrestoQueryCtrl as QueryCtrl,
+  WixPrestoConfigCtrl as ConfigCtrl,
+  WixPrestoAnnotationsQueryCtrl as AnnotationsQueryCtrl,
 };
